@@ -25,7 +25,7 @@ description: 세션을 마치기 전에 이번 세션에서 드러난 증거를 
 | 강제 | `.claude/settings.json`(Stop·PreToolUse), `.claude/hooks/*.sh` | 기계적 차단 |
 | 회귀 게이트 | `evals/harness/cases/**`, `evals/harness/lib` | 규약이 작동하는지 재는 골든셋 (라벨은 사람이 박제) |
 | 절차 | `.claude/skills/*`, `.claude/commands/*` | 반복 작업의 결정 |
-| 세션 간 기억 | `~/.claude/projects/-Users-hanms-freesign/memory/*.md` + `MEMORY.md` | 코드가 말해주지 않는 사실만 |
+| 세션 간 기억 | `~/.claude/projects/-Users-hanms-maedeup/memory/*.md` + `MEMORY.md` | 코드가 말해주지 않는 사실만 |
 
 ---
 
@@ -36,7 +36,7 @@ description: 세션을 마치기 전에 이번 세션에서 드러난 증거를 
 ```bash
 wc -l CLAUDE.md AGENTS.md ~/.claude/CLAUDE.md .claude/settings.json .claude/hooks/*.sh \
       .claude/skills/*/SKILL.md .claude/commands/*.md 2>/dev/null
-ls evals/harness/cases/*/ && ls ~/.claude/projects/-Users-hanms-freesign/memory/
+ls evals/harness/cases/*/ && ls ~/.claude/projects/-Users-hanms-maedeup/memory/
 git log --oneline -15 && git status --short
 ```
 

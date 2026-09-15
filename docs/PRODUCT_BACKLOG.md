@@ -47,6 +47,8 @@
   주기로 하면 `consume_lifetime_quota`에 버킷 하나 추가면 된다(`lib/plan.ts`의 불러오기 쿼터와 같은 패턴).
 - **연 구독 도입 / 월가 재조정** — Pro 경계가 "계약 생성"에서 "청구·수금 자동화"로 재배치된(ADR-011) 뒤
   가격을 다시 보기로 했으나 논의하지 않았다.
+- **메일 실도달 확인** (2026-09-15 `REBRAND_PLAN` 이관분) — 본인 아닌 주소로 청구서를 한 번 보내
+  `invoice_events`에 `invoice.sent`가 남는지 확인. DNS·`EMAIL_FROM`은 검증됐고 실제 도달만 미확인(`docs/EMAIL_DOMAIN_SETUP.md` 5절).
 
 > 나머지 열린 항목은 아카이브 전 확인 결과 전부 해소돼 있었다: past_due 유예(`lib/plan.ts:85`),
 > 다운그레이드 시 계약 카운트(`canCreateContract` — 불러온 계약 제외라 자동 일치), 누적 카운터 저장소,

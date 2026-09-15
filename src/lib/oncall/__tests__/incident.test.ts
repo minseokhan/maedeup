@@ -17,8 +17,8 @@ function facts(over: Partial<WorkflowRunFacts> = {}): WorkflowRunFacts {
     conclusion: "failure",
     event: "push",
     headBranch: "main",
-    headRepo: "minseokhan/freesign",
-    repo: "minseokhan/freesign",
+    headRepo: "minseokhan/maedeup",
+    repo: "minseokhan/maedeup",
     actor: "minseokhan",
     triggeringActor: "minseokhan",
     ...over,
@@ -46,7 +46,7 @@ describe("decideOncall", () => {
   });
 
   it("포크가 트리거한 실패는 건너뛴다", () => {
-    expect(decideOncall(facts({ headRepo: "someone/freesign-fork" })).respond).toBe(false);
+    expect(decideOncall(facts({ headRepo: "someone/maedeup-fork" })).respond).toBe(false);
   });
 
   it("workflow_run이 트리거한 실패는 건너뛴다 (연쇄 차단)", () => {

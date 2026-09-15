@@ -24,12 +24,12 @@ npm run dev            # http://localhost:3000
 `.env.local`에 추가(개발 환경 한정, `NODE_ENV=production`이면 라우트 404):
 ```
 ALLOW_TEST_LOGIN=true
-E2E_TEST_EMAIL=e2e-test@freesign.local
+E2E_TEST_EMAIL=e2e-test@maedeup.local
 E2E_TEST_PASSWORD=TestPass123!
 ```
 
 **전용 테스트 유저**(실제 Google 계정과 분리, 데이터 오염 방지):
-- email: `e2e-test@freesign.local` / password: `TestPass123!`
+- email: `e2e-test@maedeup.local` / password: `TestPass123!`
 - Supabase auth에 수동 생성됨(이메일 provider). 재생성이 필요하면 아래 "부록: 테스트 유저 생성" 참조.
 
 ### 0-3. agent-browser
@@ -173,7 +173,7 @@ agent-browser state save auth.json                              # 세션 저장(
 - **Pro 전환** (Supabase SQL Editor — 새 기능은 전부 Pro 전용):
   ```sql
   insert into subscriptions (user_id, plan, status)
-  select id, 'pro', 'active' from auth.users where email = 'e2e-test@freesign.local'
+  select id, 'pro', 'active' from auth.users where email = 'e2e-test@maedeup.local'
   on conflict (user_id) do update set plan = 'pro', status = 'active';
   ```
   → free로 되돌릴 땐 `plan='free', status='canceled'`. Pro면 좌측 사이드바에 **"반복 인보이스"** 메뉴(proOnly)가 나타난다.
@@ -273,7 +273,7 @@ with new_user as (
     is_super_admin, is_sso_user, is_anonymous
   ) values (
     '00000000-0000-0000-0000-000000000000', gen_random_uuid(),
-    'authenticated', 'authenticated', 'e2e-test@freesign.local',
+    'authenticated', 'authenticated', 'e2e-test@maedeup.local',
     crypt('TestPass123!', gen_salt('bf')), now(), now(), now(),
     '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb,
     false, false, false
@@ -293,5 +293,5 @@ update auth.users set
   phone_change = coalesce(phone_change, ''),
   phone_change_token = coalesce(phone_change_token, ''),
   reauthentication_token = coalesce(reauthentication_token, '')
-where email = 'e2e-test@freesign.local';
+where email = 'e2e-test@maedeup.local';
 ```

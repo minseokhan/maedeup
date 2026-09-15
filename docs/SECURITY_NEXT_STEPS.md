@@ -149,7 +149,7 @@ curl -i -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/d
 #### 8/1에 확인하는 방법 (둘 중 아무거나)
 
 **a) Vercel 대시보드**
-1. `https://vercel.com/hanminseoks-projects/freesign` 접속
+1. `https://vercel.com/hanminseoks-projects/maedeup` 접속
 2. 상단 탭에서 **Logs** (또는 좌측 **Observability → Logs**)
 3. 검색창에 `/api/cron/daily` 입력, 기간을 **Last 24 hours**로
 4. 확인할 것: **06:0x KST에 실행 1건**, 상태 **200**
@@ -158,7 +158,7 @@ curl -i -H "Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/d
 
 **b) 터미널 (더 빠름)**
 ```bash
-npx vercel logs freesign --since 12h | grep -i "cron/daily"
+npx vercel logs maedeup --since 12h | grep -i "cron/daily"
 ```
 
 > 참고: 성공 응답은 `{"ok":true,"ran":{"dunning":{...},"recurring":{...}}}` 형태입니다. `candidates:0`·`generated:0`은 정상입니다(독촉은 Pro 전용, 현재 계정은 Free).
@@ -190,7 +190,7 @@ npx vercel logs freesign --since 12h | grep -i "cron/daily"
 
 ## 3. [거의 완료 2026-07-31] 브라우저로 실제 플로우 확인
 
-`dev-browser` + 로컬 dev 서버(**원격 프로덕션 Supabase 연결**)로 태웠습니다. 테스트 계정은 `e2e-test@freesign.local`. 7단계 중 **6.5단계 통과**, 남은 것은 서명 완결 1건뿐입니다.
+`dev-browser` + 로컬 dev 서버(**원격 프로덕션 Supabase 연결**)로 태웠습니다. 테스트 계정은 `e2e-test@maedeup.local`. 7단계 중 **6.5단계 통과**, 남은 것은 서명 완결 1건뿐입니다.
 
 | 단계 | 결과 | 근거 |
 |---|---|---|
@@ -271,7 +271,7 @@ TSA URL: https://freetsa.org/tsr
 
 이 변수는 Vercel에 **Sensitive 타입**으로 등록돼 있어 대시보드에서도 `vercel env pull`로도 값을 읽을 수 없습니다(pull은 `[SENSITIVE]` 문자열을 돌려줍니다). 덮어쓰기만 가능합니다.
 
-**[해결 2026-07-31] 값을 읽지 않고 판정됐습니다.** 프로덕션(`freesign.vercel.app`)에서 계약 `test`의 서명을 완결했더니 `signature_requests.completion_tsa_token`이 **저장**됐습니다. 토큰이 남으려면 `getTimestampEnv()`가 통과하고(= `.url()` + `startsWith("https://")`) TSA가 실제로 응답해야 합니다. `http://`였다면 zod가 던져 토큰이 `null`로 남았을 것이므로, **프로덕션 `TSA_URL`은 유효한 https**입니다. 덮어쓰기는 불필요합니다.
+**[해결 2026-07-31] 값을 읽지 않고 판정됐습니다.** 프로덕션에서 계약 `test`의 서명을 완결했더니 `signature_requests.completion_tsa_token`이 **저장**됐습니다. 토큰이 남으려면 `getTimestampEnv()`가 통과하고(= `.url()` + `startsWith("https://")`) TSA가 실제로 응답해야 합니다. `http://`였다면 zod가 던져 토큰이 `null`로 남았을 것이므로, **프로덕션 `TSA_URL`은 유효한 https**입니다. 덮어쓰기는 불필요합니다.
 
 > 문서 초판의 "기본값 `https://freetsa.org/tsr`면 문제없습니다"는 오해 소지가 있어 정정합니다. **미설정 시 기본값이 자동 적용되지 않습니다.** `DEFAULT_PUBLIC_TSA_URL`은 문서화용 상수고, `TSA_URL`이 없으면 500이 아니라 **조용한 noop**(타임스탬프 없음)입니다 — `src/services/timestamp/provider.ts:17-19`.
 

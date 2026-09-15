@@ -86,7 +86,7 @@ EMAIL_FROM=매듭 <no-reply@maedeup.app>
 ```
 
 - **로컬:** `.env.local`
-- **프로덕션:** Vercel → 프로젝트(현재 이름 `freesign`, 리브랜딩 마지막 단계에서 `maedeup`으로 개명 예정)
+- **프로덕션:** Vercel → 프로젝트 `maedeup`
   → Settings → Environment Variables → Production
   → 추가 후 **재배포해야 반영된다**(빌드 타임이 아니라 런타임 값이지만 새 배포에서 주입된다).
 - `no-reply@maedeup.app` 메일함을 실제로 만들 필요는 없다. Resend는 인증된 도메인의
@@ -112,7 +112,7 @@ EMAIL_FROM=매듭 <no-reply@maedeup.app>
 ## 남는 이슈
 
 - **앱 URL과 발신 도메인 일치시키기.** 메일은 `no-reply@maedeup.app`에서 오는데 본문 링크가
-  `freesign.vercel.app`이면 수신자에게 피싱처럼 보이고 스팸 판정에도 불리하다.
+  `*.vercel.app` 주소면 수신자에게 피싱처럼 보이고 스팸 판정에도 불리하다.
   **2026-08-04 해결됨** — Cloudflare DNS·커스텀 도메인 연결·`NEXT_PUBLIC_SITE_URL` 교체가
   모두 끝나 앱 URL과 발신 도메인이 `maedeup.app`으로 일치한다.
 - **회신 주소.** 실제 발신자는 프리랜서 본인인데 메일은 매듭 도메인에서 나간다. 클라이언트가

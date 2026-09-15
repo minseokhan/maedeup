@@ -31,6 +31,7 @@
 | ---------------------------- | ---------------------------------------- | --------- |
 | `SIGNATURE_V2_FIXES_PLAN.md` | v2 수동 E2E 피드백 7건 수정 (`0022`·`0023`) — 결론 정본 ADR-009 | `maedeup-서명v2수정-20260809.md` |
 | `LIGHTHOUSE_LOOP_PLAN.md`    | 성능 최적화 루프 설계·실행 (86.6 → 98.6) — 재사용 정본은 `/lighthouse-loop` 스킬 | `maedeup-lighthouse최적화루프-20260809.md` |
+| `REBRAND_PLAN.md` (`docs/` 직하) | FreeSign → 매듭 리브랜딩 계획·Phase 4 개명까지 완료(2026-09-15) — 잔여 1건은 `PRODUCT_BACKLOG.md` §1-2 | `maedeup-리브랜딩계획-20260915.md` |
 
 ## 옛 경로 참조
 

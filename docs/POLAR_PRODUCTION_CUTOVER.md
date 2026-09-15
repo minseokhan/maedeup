@@ -139,7 +139,7 @@ select set_billing_webhook_secret('<프로덕션 whsec_... 값>');
 
 **② Vercel 환경변수 4개** (시크릿이 로그에 남지 않게 본인 터미널에서)
 ```bash
-cd ~/freesign
+cd ~/maedeup
 vercel env add POLAR_ACCESS_TOKEN production
 vercel env add POLAR_PRODUCT_ID production
 vercel env add POLAR_WEBHOOK_SECRET production
@@ -148,7 +148,7 @@ vercel env add POLAR_SERVER production        # 값: production
 
 **③ 재배포**
 ```bash
-cd ~/freesign && vercel --prod
+cd ~/maedeup && vercel --prod
 ```
 
 ### 2-3. 검증
@@ -169,7 +169,7 @@ select user_id, plan, status, polar_customer_id, updated_at
 ### 2-4. 🔴 킬 스위치
 
 ```bash
-cd ~/freesign
+cd ~/maedeup
 vercel env rm POLAR_PRODUCT_ID production && vercel --prod
 ```
 

@@ -19,7 +19,7 @@ Supabase MCP `get_advisors`로 데이터베이스의 **보안·성능 린트**�
 ## 실행 절차
 
 ### 1. 대상 프로젝트 확정
-- `mcp__supabase__list_projects`로 프로젝트를 조회한다. 이 레포는 기본이 **freesign**(ref `jbfxkcjeoqwcdsxuemug`)이다. 프로젝트가 하나면 그걸 쓰고, 여럿이면 이름으로 매칭하되 애매하면 사용자에게 확인한다.
+- `mcp__supabase__list_projects`로 프로젝트를 조회한다. 이 레포는 기본이 **maedeup**(ref `jbfxkcjeoqwcdsxuemug`)이다. 프로젝트가 하나면 그걸 쓰고, 여럿이면 이름으로 매칭하되 애매하면 사용자에게 확인한다.
 - `project_id`(ref)를 확정한다. 이후 모든 어드바이저·SQL 호출에 쓴다.
 
 ### 2. 어드바이저 스캔 + 쓰기 가능 여부 프리플라이트
@@ -48,7 +48,7 @@ Supabase MCP `get_advisors`로 데이터베이스의 **보안·성능 린트**�
 
 ```json
 {
-  "meta": { "project": "freesign", "project_ref": "jbfx…", "generated": "<오늘 날짜>",
+  "meta": { "project": "maedeup", "project_ref": "jbfx…", "generated": "<오늘 날짜>",
             "types": ["security", "performance"] },
   "findings": [
     { "lint": "function_search_path_mutable", "title": "Function Search Path Mutable",
@@ -82,7 +82,7 @@ python3 scripts/build_dashboard.py <스크래치>/db-advisor-findings.json --out
 사용자가 적용을 승인하면, 승인 범위 안의 항목만:
 
 1. **마이그레이션 파일 작성.** `supabase/migrations`의 마지막 번호를 확인해(`ls`) 다음 4자리 시퀀스로 파일을 만든다. 이름은 서술적으로: 보안 수정이면 `NNNN_advisor_security_fixes.sql`, 성능이면 `NNNN_advisor_perf_indexes.sql`. 한 번의 승인은 **한 파일에** 모으되, 보안·성능이 섞이면 두 파일로 나눠도 된다. 파일 상단에 어떤 린트를 고치는지 주석으로 남긴다.
-2. **원격 적용.** (2단계 프리플라이트가 read-only가 **아닐** 때만) `mcp__supabase__apply_migration`에 `name`(파일명에서 확장자 뺀 것)과 `query`(파일 내용)를 넘겨 원격 freesign DB에 반영한다. 파일과 원격을 반드시 함께 — git↔DB 드리프트를 막는다. **read-only면** 원격 적용을 건너뛰고 파일만 남긴 뒤, 사용자에게 수동 적용 방법(대시보드 SQL 에디터 또는 `supabase db push`)과 파일 경로를 안내한다.
+2. **원격 적용.** (2단계 프리플라이트가 read-only가 **아닐** 때만) `mcp__supabase__apply_migration`에 `name`(파일명에서 확장자 뺀 것)과 `query`(파일 내용)를 넘겨 원격 maedeup DB에 반영한다. 파일과 원격을 반드시 함께 — git↔DB 드리프트를 막는다. **read-only면** 원격 적용을 건너뛰고 파일만 남긴 뒤, 사용자에게 수동 적용 방법(대시보드 SQL 에디터 또는 `supabase db push`)과 파일 경로를 안내한다.
 3. **검증.** 적용 후 `get_advisors`를 관련 타입으로 **재실행**해 해당 린트가 사라졌는지 확인한다. 남아 있으면 원인을 조사해 보고한다(예: 함수 재정의가 필요했는데 ALTER만 했다면 여기서 드러난다).
 
 ### 7. 마무리
